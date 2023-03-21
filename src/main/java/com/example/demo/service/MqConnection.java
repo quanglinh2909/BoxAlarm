@@ -28,16 +28,16 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.demo.service.Login.URL_DSS;
+import static com.example.demo.constants.Global.URL_DSS;
 import static com.example.demo.service.Login.USER_ID;
-public class MqConnectionExample {
+public class MqConnection {
     static final String MQ_URL_PRFIX = "ssl://%s";
-    static final String MQ_CONFIG_URL =URL_DSS+ "BRM/Config/GetMqConfig?token=%s";
+    static final String MQ_CONFIG_URL =URL_DSS+ "brms/api/v1.0/BRM/Config/GetMqConfig?token=%s";
     static final String TOPIC="topic";
     static final String QUEUE="queue";
     CallPhone callPhone = new CallPhone();
 
-    public MqConnectionExample() throws Exception {
+    public MqConnection() throws Exception {
         byte[] privateKeyBytes = Base64.getDecoder().decode(Login.PRIVATE_KEY);
         //Decrypt "SecretKey" and "SecretVector".
         String secretKey = decryptRSAByPrivateKey(Login.SECRETKEY_WITH_SA,privateKeyBytes);
@@ -83,6 +83,8 @@ public class MqConnectionExample {
             TextMessage textMessage = (TextMessage) message;
             try {
                 String text = textMessage.getText();
+                System.out.println(text);
+
                 //Print the listening message.
                 System.out.println("-------------------------------------------------------");
                 JSONObject jsonObject = JSON.parseObject(text);
@@ -98,9 +100,8 @@ public class MqConnectionExample {
                         }
                     }
                 }
-                System.out.println(text);
             } catch (Exception e) {
-                e.printStackTrace();
+               System.out.println(e.getMessage());
             }
         });
     }

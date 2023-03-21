@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static com.example.demo.constants.Global.URL_CLOUD;
+
 public class CallPhone {
 //    twilio.account_sid=AC6e601872b3f78250d49ccde574a68baa
 //    twilio.auth_token:764081af256a789ece2698be65828b0f
@@ -24,7 +26,7 @@ public class CallPhone {
 //    twilio.url:+17163002384
 
     final static String ACCOUNT_SID = "AC6e601872b3f78250d49ccde574a68baa";
-    final static String AUTH_TOKEN = "764081af256a789ece2698be65828b0f";
+    final static String AUTH_TOKEN = "831a6e3991e70447c3eace090dca559c";
     final static String TRIAL_NUMBER = "+17163002384";
     final static String URL = "https://coffee-koala-5001.twil.io/assets/cuu.mp3";
     public CallPhone() {
@@ -40,14 +42,18 @@ public class CallPhone {
             Call call = callCreator.create();
 
     }
+
     public void callListPhone(String id) throws Exception {
-        String t = CallPhone.sendGet("http://192.168.103.59:4100/api/phonebook/get-all-by-alarm/", id);
+        String t = CallPhone.sendGet(URL_CLOUD+"phonebook/get-all-by-alarm/", id);
+        System.out.println("-------------------------callListPhone-------------------------");
+        System.out.println(t);
         JSONArray jsonArray = JSON.parseArray(t);
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             String phone = jsonObject.getString("Phone");
             //0355535733 -> +84355535733
             phone = "+84" + phone.substring(1);
+            System.out.println(phone);
             call(phone);
         }
     }

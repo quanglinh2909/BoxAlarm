@@ -13,22 +13,22 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.security.*;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.example.demo.constants.Global.*;
+
+
 public class Login {
-    static final String URL_DSS = "http://192.168.20.13:8013/brms/api/v1.0/";
-    static final String ADDRESS = "192.168.20.13:8013";
-    static final String USER_NAME = "hieutp";
-    static final String PASS = "Oryza@2023";
+
 //44313
-    static final String AUTH_URL = URL_DSS+"accounts/authorize";
-    static final String KEEP_ALIVE_URL = URL_DSS+"accounts/keepalive";
-    static final String UPDATE_TOKEN_URL = URL_DSS+"accounts/updateToken";
+    static final String AUTH_URL = URL_DSS+"brms/api/v1.0/accounts/authorize";
+    static final String KEEP_ALIVE_URL = URL_DSS+"brms/api/v1.0/accounts/keepalive";
+    static final String UPDATE_TOKEN_URL = URL_DSS+"brms/api/v1.0/accounts/updateToken";
     static final String SUCCESS_CODE = "1000";
     static String SIGNATURE_MD5_TEMP4 = null;
     static String TOKEN_VALUE = null;
@@ -43,6 +43,7 @@ public class Login {
     static String  PRIVATE_KEY = null;
     static String  PUBLIC_KEY = null;
     static String  USER_ID = null;
+
 
 
 
@@ -100,16 +101,16 @@ public class Login {
         keepAlive.start();
         //Login is over,do your own things with the token...
 
-        MqConnectionExample mqConnectionExample = new MqConnectionExample();
-        Map d = new HashMap<>(2);
-        d.put("token", TOKEN_VALUE);
-        d.put("orgCode", "001");
+        MqConnection mqConnectionExample = new MqConnection();
+//        Map d = new HashMap<>(2);
+//        d.put("token", TOKEN_VALUE);
+//        d.put("orgCode", "001");
 
-
-        String dives = sendPostOrPut(URL_DSS+"admin/API/tree/devices", d,
-                POST);
-        System.out.println("-----------fgsfdgsfdg-----");
-        System.out.println(dives);
+//
+//        String dives = sendPostOrPut(URL_DSS+"admin/API/tree/devices", d,
+//                POST);
+//        System.out.println("-----------fgsfdgsfdg-----");
+//        System.out.println(dives);
 
     }
     static String sendPostOrPut(String url, Map params, String requestMode) throws IOException {
